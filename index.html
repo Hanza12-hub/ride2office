@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ride2Office - Reliable Staff Transport</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #004085; /* Dark Blue */
+            --secondary-color: #f8f9fa; /* Light Gray */
+            --accent-color: #28a745;   /* Vibrant Green */
+            --text-color: #343a40;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--secondary-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            background: linear-gradient(rgba(0, 64, 133, 0.8), rgba(0, 64, 133, 0.8)), url('https://images.unsplash.com/photo-1549929837-17e9fe556a31?q=80&w=1470&auto=format&fit=crop') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 8rem 0;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: #218838;
+            transform: translateY(-3px);
+        }
+
+        /* --- Sections --- */
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            font-weight: 600;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary-color);
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+
+        /* --- Routes Grid --- */
+        .routes-grid {
+            display: block;
+        }
+        
+        .route-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            padding: 2.5rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 600px; 
+            margin: 0 auto;
+        }
+
+        .route-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .route-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .route-card p {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .route-card .icon-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .route-card .icon-label i {
+            color: var(--accent-color);
+        }
+
+        /* --- Fleet Section --- */
+        .fleet-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        .fleet-photo {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .fleet-photo:hover {
+            transform: scale(1.02);
+        }
+
+        .fleet-details {
+            text-align: center;
+        }
+        
+        .fleet-details h3 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .fleet-features {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .fleet-features li {
+            font-weight: 600;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .fleet-features li.non-ac {
+            background-color: #dc3545; /* Red for emphasis */
+        }
+
+        .fleet-features li i {
+            color: var(--accent-color);
+        }
+        
+        .fleet-features li.non-ac i {
+            color: white; /* Make the fan icon white */
+        }
+
+        /* --- Contact Section --- */
+        .contact-details {
+            text-align: center;
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .contact-details p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* New styles for phone numbers with copy button */
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-item a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        
+        .contact-item a:hover {
+            color: var(--accent-color);
+        }
+        
+        .copy-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--primary-color);
+            font-size: 1rem;
+            padding: 5px;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+        
+        .copy-btn:hover {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+        
+        .copy-btn:focus {
+            outline: none;
+        }
+
+        .copied-feedback {
+            color: var(--accent-color) !important;
+            font-weight: 600;
+        }
+
+        .contact-details .social-links {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .contact-details .social-links a {
+            font-size: 2rem;
+            color: var(--primary-color);
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .contact-details .social-links a:hover {
+            transform: scale(1.1);
+            color: var(--accent-color);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+        }
+
+        /* --- Go Up Button --- */
+        #goUpBtn {
+            display: none; /* Hidden by default */
+            position: fixed; /* Fixed position */
+            bottom: 20px;
+            right: 20px;
+            z-index: 99; /* Ensure it's on top of other content */
+            font-size: 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 12px 18px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        #goUpBtn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        /* --- Media Queries for responsiveness --- */
+        @media (min-width: 768px) {
+            .fleet-container {
+                flex-direction: row;
+                text-align: left;
+            }
+            .fleet-details {
+                text-align: left;
+                padding-left: 2rem;
+            }
+            .fleet-features {
+                justify-content: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Ride2Office</h1>
+            <p>Your journey to work, made simple, safe, and stress-free.</p>
+            <a href="#contact" class="cta-button">Book Your Ride Now</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="routes" class="section">
+            <div class="container">
+                <h2 class="section-title">Our Daily Route</h2>
+                <div class="routes-grid">
+                    <div class="route-card">
+                        <h3><i class="fas fa-route"></i> Route Plan</h3>
+                        <p class="icon-label"><i class="fas fa-map-pin"></i> <strong>Start:</strong> Thalapathpitiya</p>
+                        <p class="icon-label"><i class="fas fa-building"></i> <strong>End:</strong> Punchi Borella</p>
+                        <p class="icon-label"><i class="fas fa-clock"></i> <strong>Pickup:</strong> 7:30 AM</p>
+                        <p class="icon-label"><i class="fas fa-clock"></i> <strong>Drop-off:</strong> 8:20 AM</p>
+                        <br>
+                        <p><strong>Stops Include:</strong> Thalapathpitiya, Embuldeniya, Mirihana, Nugegoda, Nawala, Narahenpita, Jawatta Road, Torrington, Bauddhaloka Mawatha (Colombo 07), Borella, Punchi Borella.</p>
+                        <a href="https://www.google.com/maps/dir/Thalapathpitiya/Embuldeniya/Mirihana/Nugegoda/Nawala/Narahenpita/Jawatta+Road/Torrington/Baudhaloka+Mawatha,+Colombo+7/Borella/Punchi+Borella" target="_blank" class="cta-button" style="padding: 0.5rem 1.5rem; font-size: 0.9rem; margin-top: 1rem;">View Route on Map</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        ---
+
+        <section id="fleet" class="section" style="background-color: var(--card-bg);">
+            <div class="container">
+                <h2 class="section-title">Our Reliable Vehicle</h2>
+                <div class="fleet-container">
+                    <img src="https://images.unsplash.com/photo-1616892550186-b48455a796a4?q=80&w=1549&auto=format&fit=crop" alt="A clean and modern passenger van used for staff transport." class="fleet-photo">
+                    <div class="fleet-details">
+                        <h3>Travel Safely with Us</h3>
+                        <p>Our well-maintained vehicle is driven by a professional, vetted driver to ensure your safety and a punctual commute every time.</p>
+                        <ul class="fleet-features">
+                            <li><i class="fas fa-user-friends"></i> 13-Passenger Capacity</li>
+                            <li class="non-ac"><i class="fas fa-fan"></i> Non-AC</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        ---
+
+        <section id="contact" class="section">
+            <div class="container">
+                <h2 class="section-title">Ready to Start Your Commute?</h2>
+                <div class="contact-details">
+                    <p>Contact us today to arrange transport for you or get more information about our service.</p>
+                    
+                    <p>
+                        <strong style="display: block; margin-bottom: 0.5rem;">Phone Numbers:</strong>
+                        <div class="contact-item">
+                            <a href="tel:+1234567890" class="phone-number">0777612942</a>
+                            <button class="copy-btn" aria-label="Copy phone number">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="contact-item">
+                            <a href="tel:+1234567891" class="phone-number">0717612942</a>
+                            <button class="copy-btn" aria-label="Copy phone number">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </p>
+                    <p><strong>Driver:</strong> Mr. Shantha</p>
+                    <p><strong>Email:</strong> <a href="mailto:contact@ride2office.com">ride2office58.lk@gmail.com</a></p>
+                    
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Ride2Office. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Go Up Button -->
+    <button id="goUpBtn" title="Go to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const copyButtons = document.querySelectorAll('.copy-btn');
+            
+            copyButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const phoneNumberElement = button.previousElementSibling;
+                    const phoneNumber = phoneNumberElement.textContent;
+
+                    // Use execCommand for broader compatibility within the sandbox environment
+                    const textArea = document.createElement("textarea");
+                    textArea.value = phoneNumber;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                        
+                        const originalIcon = button.querySelector('i').className;
+                        const originalText = button.innerHTML;
+
+                        button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        button.classList.add('copied-feedback');
+                        
+                        setTimeout(() => {
+                            button.innerHTML = originalText;
+                            button.classList.remove('copied-feedback');
+                        }, 2000);
+                        
+                    } catch (err) {
+                        console.error('Failed to copy text: ', err);
+                    }
+                    document.body.removeChild(textArea);
+                });
+            });
+        });
+    </script>
+
+    <script>
+        // JavaScript for Go Up Button
+        window.onscroll = function() {
+            scrollFunction();
+        };
+
+        function scrollFunction() {
+            const goUpBtn = document.getElementById("goUpBtn");
+            // Show the button when the user scrolls down 200px or more
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                goUpBtn.style.display = "block";
+            } else {
+                goUpBtn.style.display = "none";
+            }
+        }
+
+        // Add a click event listener to the button for smooth scrolling
+        document.getElementById("goUpBtn").addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
