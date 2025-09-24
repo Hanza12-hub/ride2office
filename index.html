@@ -8,9 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* CSS Variables for Light and Dark Mode */
+        /* CSS Variables for a consistent Light Mode */
         :root {
-            /* Light Mode Colors */
             --primary-color: #004085; /* Dark Blue */
             --secondary-color: #e0dfd4; /* Light Khaki */
             --accent-color: #28a745;  /* Vibrant Green */
@@ -18,17 +17,6 @@
             --card-bg: #ffffff;
             --go-up-btn-bg: var(--primary-color);
             --go-up-btn-hover-bg: var(--accent-color);
-        }
-
-        .dark-mode {
-            /* Dark Mode Colors */
-            --primary-color: #8c4e00; /* Rich Brown */
-            --secondary-color: #1a1a1a; /* Dark background */
-            --accent-color: #79c944;  /* Brighter Green */
-            --text-color: #f0f0f0;
-            --card-bg: #2d2d2d;
-            --go-up-btn-bg: var(--accent-color);
-            --go-up-btn-hover-bg: var(--primary-color);
         }
 
         * {
@@ -204,20 +192,6 @@
             margin: 0 auto;
         }
         
-        /* Force the route card to stay white and its text to be dark in dark mode */
-        .dark-mode .route-card {
-            background-color: #ffffff;
-        }
-
-        .dark-mode .route-card h3 {
-            color: #004085;
-        }
-        
-        .dark-mode .route-card p,
-        .dark-mode .route-card .icon-label {
-            color: #343a40;
-        }
-
         .route-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
@@ -554,30 +528,7 @@
         #callBtn:hover {
             background-color: #218838;
         }
-
-        #theme-toggle-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: background-color 0.5s ease, color 0.5s ease, transform 0.3s ease;
-            z-index: 99;
-        }
-
-        #theme-toggle-btn:hover {
-            transform: scale(1.1);
-        }
-
+        
         /* --- Media Queries for responsiveness --- */
         @media (min-width: 768px) {
             .fleet-container {
@@ -594,17 +545,12 @@
         }
     </style>
 </head>
-<body class="dark-mode">
+<body>
 
     <!-- Preloader Overlay -->
     <div id="preloader">
         <img src="https://i.pinimg.com/originals/1a/dc/15/1adc15631ddb720046af616d0d4d0b47.gif" alt="Loading...">
     </div>
-
-    <!-- Theme Toggle Button -->
-    <button id="theme-toggle-btn" aria-label="Toggle dark and light mode">
-        <i class="fas fa-moon"></i>
-    </button>
 
     <header class="hero">
         <div class="container">
@@ -726,19 +672,6 @@
     </div>
 
     <script>
-        // Set initial theme based on local storage or default to dark
-        const body = document.body;
-        const themeToggleBtn = document.getElementById('theme-toggle-btn');
-        const savedTheme = localStorage.getItem('theme');
-
-        if (savedTheme === 'light') {
-            body.classList.remove('dark-mode');
-            themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
-        } else {
-            body.classList.add('dark-mode');
-            themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
-        }
-
         // Hide preloader when page loads
         window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
@@ -746,19 +679,6 @@
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Theme toggle functionality
-            themeToggleBtn.addEventListener('click', () => {
-                if (body.classList.contains('dark-mode')) {
-                    body.classList.remove('dark-mode');
-                    themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
-                    localStorage.setItem('theme', 'light');
-                } else {
-                    body.classList.add('dark-mode');
-                    themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
-                    localStorage.setItem('theme', 'dark');
-                }
-            });
-
             // Copy phone number functionality
             const copyButtons = document.querySelectorAll('.copy-btn');
             
