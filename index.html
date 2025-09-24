@@ -4,15 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ride2Office - Reliable Staff Transport</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Poppins for body text, Bebas Neue for header -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* CSS Variables for Light and Dark Mode */
         :root {
+            /* Light Mode Colors */
             --primary-color: #004085; /* Dark Blue */
-            --secondary-color: #f8f9fa; /* Light Gray */
-            --accent-color: #28a745;   /* Vibrant Green */
+            --secondary-color: #e0dfd4; /* Light Khaki */
+            --accent-color: #28a745;  /* Vibrant Green */
             --text-color: #343a40;
             --card-bg: #ffffff;
+            --go-up-btn-bg: var(--primary-color);
+            --go-up-btn-hover-bg: var(--accent-color);
+        }
+
+        .dark-mode {
+            /* Dark Mode Colors */
+            --primary-color: #8c4e00; /* Rich Brown */
+            --secondary-color: #1a1a1a; /* Dark background */
+            --accent-color: #79c944;  /* Brighter Green */
+            --text-color: #f0f0f0;
+            --card-bg: #2d2d2d;
+            --go-up-btn-bg: var(--accent-color);
+            --go-up-btn-hover-bg: var(--primary-color);
         }
 
         * {
@@ -30,6 +46,84 @@
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--secondary-color);
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* Glitch effect for the header */
+        .glitch-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            position: relative;
+            animation: glitch-anim 2s infinite;
+        }
+
+        .glitch-text:before,
+        .glitch-text:after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .glitch-text:before {
+            left: 2px;
+            text-shadow: -2px 0 var(--accent-color);
+            clip: rect(44px, 450px, 56px, 0);
+        }
+
+        .glitch-text:after {
+            left: -2px;
+            text-shadow: -2px 0 var(--primary-color);
+            clip: rect(80px, 450px, 92px, 0);
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                transform: translate(0);
+            }
+            20% {
+                transform: translate(-5px, 5px);
+            }
+            40% {
+                transform: translate(-5px, -5px);
+            }
+            60% {
+                transform: translate(5px, 5px);
+            }
+            80% {
+                transform: translate(5px, -5px);
+            }
+            100% {
+                transform: translate(0);
+            }
+        }
+
+        /* Preloader styles */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--secondary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 0.5s ease;
+        }
+
+        #preloader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #preloader img {
+            width: 120px;
+            height: 120px;
         }
 
         .container {
@@ -40,16 +134,10 @@
 
         /* --- Hero Section --- */
         .hero {
-            background: linear-gradient(rgba(0, 64, 133, 0.8), rgba(0, 64, 133, 0.8)), url('https://images.unsplash.com/photo-1549929837-17e9fe556a31?q=80&w=1470&auto=format&fit=crop') no-repeat center center/cover;
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1549929837-17e9fe556a31?q=80&w=1470&auto=format&fit=crop') no-repeat center center/cover;
             color: white;
             text-align: center;
             padding: 8rem 0;
-        }
-
-        .hero h1 {
-            font-size: clamp(2rem, 5vw, 4rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
         }
 
         .hero p {
@@ -87,6 +175,7 @@
             margin-bottom: 3rem;
             font-weight: 600;
             position: relative;
+            color: var(--primary-color);
         }
         
         .section-title::after {
@@ -105,14 +194,28 @@
         }
         
         .route-card {
-            background: var(--card-bg);
+            background-color: var(--card-bg);
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             padding: 2.5rem;
             text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.5s ease;
             max-width: 600px; 
             margin: 0 auto;
+        }
+        
+        /* Force the route card to stay white and its text to be dark in dark mode */
+        .dark-mode .route-card {
+            background-color: #ffffff;
+        }
+
+        .dark-mode .route-card h3 {
+            color: #004085;
+        }
+        
+        .dark-mode .route-card p,
+        .dark-mode .route-card .icon-label {
+            color: #343a40;
         }
 
         .route-card:hover {
@@ -143,6 +246,11 @@
         .route-card .icon-label i {
             color: var(--accent-color);
         }
+        .route-card h3 img {
+            height: 4.5rem; 
+            margin-right: 0.5rem; 
+            vertical-align: middle;
+        }
 
         /* --- Fleet Section --- */
         .fleet-container {
@@ -151,19 +259,7 @@
             align-items: center;
             gap: 2.5rem;
         }
-
-        .fleet-photo {
-            width: 100%;
-            max-width: 600px;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
         
-        .fleet-photo:hover {
-            transform: scale(1.02);
-        }
-
         .fleet-details {
             text-align: center;
         }
@@ -193,6 +289,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            transition: background-color 0.5s ease;
         }
 
         .fleet-features li.non-ac {
@@ -207,6 +304,137 @@
             color: white; /* Make the fan icon white */
         }
 
+        /* New Slideshow CSS */
+        .slideshow-container {
+            position: relative;
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .mySlides {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            z-index: 1; /* All slides at a low z-index */
+        }
+
+        .mySlides.active {
+            opacity: 1;
+            z-index: 2; /* Active slide is on top */
+        }
+        
+        .mySlides img {
+            width: 100%;
+            height: auto;
+            display: block;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out; /* Add transition for smoothness */
+        }
+
+        .mySlides img:hover {
+            transform: scale(1.03); /* Zoom in effect on hover */
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 3; /* Navigation buttons on top */
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .numbertext {
+            color: white;
+            background-color: rgba(0,0,0,0.5);
+            font-size: 12px;
+            padding: 8px 12px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 15px 0 0 0;
+        }
+        
+        /* Placeholder for spacing */
+        .slideshow-container::before {
+            content: '';
+            display: block;
+            padding-top: 66.66%; /* Aspect ratio of 3:2 for the images */
+        }
+        
+        /* The Modal (Lightbox) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 101;
+            padding-top: 60px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        .modal-content {
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @keyframes zoom {
+            from {transform:scale(0)}
+            to {transform:scale(1)}
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
         /* --- Contact Section --- */
         .contact-details {
             text-align: center;
@@ -214,6 +442,7 @@
             padding: 3rem;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: background-color 0.5s ease;
         }
         
         .contact-details p {
@@ -272,12 +501,6 @@
             gap: 1.5rem;
         }
 
-        .contact-details .social-links a {
-            font-size: 2rem;
-            color: var(--primary-color);
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-
         .contact-details .social-links a:hover {
             transform: scale(1.1);
             color: var(--accent-color);
@@ -289,17 +512,14 @@
             color: white;
             text-align: center;
             padding: 1.5rem 0;
+            transition: background-color 0.5s ease;
         }
 
-        /* --- Go Up Button --- */
-        #goUpBtn {
-            display: none; /* Hidden by default */
-            position: fixed; /* Fixed position */
+        /* --- Floating Buttons --- */
+        .floating-btn {
+            position: fixed;
             bottom: 20px;
-            right: 20px;
-            z-index: 99; /* Ensure it's on top of other content */
             font-size: 24px;
-            background-color: var(--primary-color);
             color: white;
             border: none;
             outline: none;
@@ -308,11 +528,54 @@
             border-radius: 50%;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: background-color 0.3s ease, transform 0.3s ease;
+            z-index: 99;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+        }
+
+        #goUpBtn {
+            display: none; /* Hidden by default */
+            right: 20px;
+            background-color: var(--go-up-btn-bg);
+            transition: background-color 0.5s ease;
         }
 
         #goUpBtn:hover {
+            background-color: var(--go-up-btn-hover-bg);
+        }
+
+        #callBtn {
+            left: 20px;
             background-color: var(--accent-color);
-            transform: translateY(-3px);
+        }
+
+        #callBtn:hover {
+            background-color: #218838;
+        }
+
+        #theme-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.5s ease, color 0.5s ease, transform 0.3s ease;
+            z-index: 99;
+        }
+
+        #theme-toggle-btn:hover {
+            transform: scale(1.1);
         }
 
         /* --- Media Queries for responsiveness --- */
@@ -331,11 +594,21 @@
         }
     </style>
 </head>
-<body>
+<body class="dark-mode">
+
+    <!-- Preloader Overlay -->
+    <div id="preloader">
+        <img src="https://i.pinimg.com/originals/1a/dc/15/1adc15631ddb720046af616d0d4d0b47.gif" alt="Loading...">
+    </div>
+
+    <!-- Theme Toggle Button -->
+    <button id="theme-toggle-btn" aria-label="Toggle dark and light mode">
+        <i class="fas fa-moon"></i>
+    </button>
 
     <header class="hero">
         <div class="container">
-            <h1>Ride2Office</h1>
+            <h1 class="glitch-text" data-text="Ride2Office">Ride2Office</h1>
             <p>Your journey to work, made simple, safe, and stress-free.</p>
             <a href="#contact" class="cta-button">Book Your Ride Now</a>
         </div>
@@ -347,7 +620,7 @@
                 <h2 class="section-title">Our Daily Route</h2>
                 <div class="routes-grid">
                     <div class="route-card">
-                        <h3><i class="fas fa-route"></i> Route Plan</h3>
+                        <h3><img src="https://mir-s3-cdn-cf.behance.net/project_modules/source/9e824d69132997.5b75a8aba25aa.gif" alt="Animated map icon"> Route Plan</h3>
                         <p class="icon-label"><i class="fas fa-map-pin"></i> <strong>Start:</strong> Thalapathpitiya</p>
                         <p class="icon-label"><i class="fas fa-building"></i> <strong>End:</strong> Punchi Borella</p>
                         <p class="icon-label"><i class="fas fa-clock"></i> <strong>Pickup:</strong> 7:30 AM</p>
@@ -366,7 +639,25 @@
             <div class="container">
                 <h2 class="section-title">Our Reliable Vehicle</h2>
                 <div class="fleet-container">
-                    <img src="https://images.unsplash.com/photo-1616892550186-b48455a796a4?q=80&w=1549&auto=format&fit=crop" alt="A clean and modern passenger van used for staff transport." class="fleet-photo">
+                    <!-- Slideshow container -->
+                    <div class="slideshow-container">
+                        <!-- Full-width images with number and caption text -->
+                        <div class="mySlides">
+                            <div class="numbertext">1 / 3</div>
+                            <img src="src/van1.jpg" style="width:100%" alt="A clean and modern passenger van used for staff transport.">
+                        </div>
+                        <div class="mySlides">
+                            <div class="numbertext">2 / 3</div>
+                            <img src="src/van2.jpeg" style="width:100%" alt="Rear View">
+                        </div>
+                        <div class="mySlides">
+                            <div class="numbertext">3 / 3</div>
+                            <img src="https://placehold.co/600x400/8c4e00/ffffff?text=Interior" style="width:100%" alt="Interior">
+                        </div>
+                        <!-- Next and previous buttons -->
+                        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                    </div>
                     <div class="fleet-details">
                         <h3>Travel Safely with Us</h3>
                         <p>Our well-maintained vehicle is driven by a professional, vetted driver to ensure your safety and a punctual commute every time.</p>
@@ -403,7 +694,7 @@
                         </div>
                     </p>
                     <p><strong>Driver:</strong> Mr. Shantha</p>
-                    <p><strong>Email:</strong> <a href="mailto:contact@ride2office.com">ride2office58.lk@gmail.com</a></p>
+                    <p><strong>Email:</strong> <a href="mailto:ride2office58.lk@gmail.com">ride2office58.lk@gmail.com</a></p>
                     
                 </div>
             </div>
@@ -417,12 +708,58 @@
     </footer>
 
     <!-- Go Up Button -->
-    <button id="goUpBtn" title="Go to top">
+    <button id="goUpBtn" title="Go to top" class="floating-btn">
         <i class="fas fa-chevron-up"></i>
     </button>
+    
+    <!-- Floating Call Button -->
+    <a id="callBtn" class="floating-btn" href="tel:0777612942" title="Call Us">
+        <i class="fas fa-phone"></i>
+    </a>
+
+    <!-- The Modal (Lightbox) -->
+    <div id="myModal" class="modal">
+        <!-- The Close Button -->
+        <span class="close">&times;</span>
+        <!-- Modal Content (The Image) -->
+        <img class="modal-content" id="modalImage">
+    </div>
 
     <script>
+        // Set initial theme based on local storage or default to dark
+        const body = document.body;
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme === 'light') {
+            body.classList.remove('dark-mode');
+            themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            body.classList.add('dark-mode');
+            themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+
+        // Hide preloader when page loads
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            preloader.classList.add('hidden');
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
+            // Theme toggle functionality
+            themeToggleBtn.addEventListener('click', () => {
+                if (body.classList.contains('dark-mode')) {
+                    body.classList.remove('dark-mode');
+                    themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    body.classList.add('dark-mode');
+                    themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+
+            // Copy phone number functionality
             const copyButtons = document.querySelectorAll('.copy-btn');
             
             copyButtons.forEach(button => {
@@ -455,10 +792,73 @@
                     document.body.removeChild(textArea);
                 });
             });
-        });
-    </script>
 
-    <script>
+            // Slideshow Logic
+            let slideIndex = 0; // Start at index 0 for array access
+            const slides = document.querySelectorAll('.mySlides');
+            const modal = document.getElementById('myModal');
+            const modalImage = document.getElementById('modalImage');
+            const closeBtn = document.querySelector('.close');
+            let slideshowTimeout;
+
+            function showSlides() {
+                // Hide all slides
+                slides.forEach(slide => {
+                    slide.classList.remove('active');
+                });
+                // Show the current slide
+                slides[slideIndex].classList.add('active');
+            }
+
+            // Function to advance the slides automatically
+            function autoSlides() {
+                slideIndex++;
+                if (slideIndex >= slides.length) {
+                    slideIndex = 0;
+                }
+                showSlides();
+                slideshowTimeout = setTimeout(autoSlides, 4000); // Change image every 4 seconds
+            }
+
+            // Function to change slides manually
+            window.plusSlides = function(n) {
+                clearTimeout(slideshowTimeout); // Clear the auto slideshow timer
+                slideIndex += n;
+                if (slideIndex >= slides.length) {
+                    slideIndex = 0;
+                }
+                if (slideIndex < 0) {
+                    slideIndex = slides.length - 1;
+                }
+                showSlides();
+                slideshowTimeout = setTimeout(autoSlides, 4000); // Restart the timer
+            }
+            
+            // Thumbnail click to open lightbox
+            slides.forEach((slide, index) => {
+                slide.querySelector('img').onclick = function() {
+                    modal.style.display = "block";
+                    modalImage.src = this.src;
+                }
+            });
+
+            // Close lightbox
+            closeBtn.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            // Close lightbox when clicking outside the image
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+
+            // Start the automatic slideshow on page load
+            showSlides();
+            slideshowTimeout = setTimeout(autoSlides, 4000);
+        });
+
         // JavaScript for Go Up Button
         window.onscroll = function() {
             scrollFunction();
